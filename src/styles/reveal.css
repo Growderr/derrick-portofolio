@@ -1,0 +1,45 @@
+/*
+ * Scroll reveal. Classes are toggled by src/hooks/useAutoReveal.js:
+ *   .rv     element is managed (hidden until it enters the screen)
+ *   .rv-in  on screen: slides in from the right
+ *   .rv-out just left the screen: fades out
+ * Animations (not transitions) are used so hover effects on the same
+ * elements keep working.
+ */
+.rv:not(.rv-in) {
+  opacity: 0;
+}
+
+.rv-in {
+  animation: rv-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--rv-delay, 0ms) backwards;
+}
+
+.rv-out {
+  animation: rv-out 0.45s ease-out both;
+}
+
+@keyframes rv-in {
+  from {
+    opacity: 0;
+    transform: translateX(72px);
+  }
+}
+
+@keyframes rv-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce), print {
+  .rv:not(.rv-in) {
+    opacity: 1 !important;
+  }
+  .rv-in,
+  .rv-out {
+    animation: none !important;
+  }
+}

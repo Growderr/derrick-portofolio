@@ -1,0 +1,101 @@
+/*
+ * Design tokens
+ * -------------
+ * 1. Raw values live on :root as plain CSS variables.
+ * 2. @theme inline maps them to Tailwind utilities (bg-paper, text-ink, ...).
+ *
+ * The site has a single light theme (white, black and yellow) by design.
+ * Type: Bricolage Grotesque (display), Instrument Sans (body), JetBrains Mono (labels),
+ * Instrument Serif italic (rare accent).
+ */
+
+:root {
+  /* Three dominant colors */
+  --paper: #ffffff;
+  --ink: #000000;
+  --accent: #ffed4d;
+  --on-accent: #000000; /* text placed on the yellow, always black */
+
+  /* Neutrals: borders, muted text, subtle surfaces */
+  --muted: #595959; /* 7:1 on white */
+  --line: #d4d4d4;
+  --surface: #f5f5f5;
+
+  /* Keyboard focus ring. Inverse surfaces override this to yellow. */
+  --focus: var(--ink);
+}
+
+/* Black blocks such as the footer: keyboard focus turns yellow on them */
+.surface-inverse {
+  --focus: var(--accent);
+}
+
+@theme inline {
+  --color-*: initial; /* drop Tailwind's default palette so only tokens can be used */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
+  --color-focus: var(--focus);
+}
+
+@theme {
+  /* Typography families */
+  --font-display: "Bricolage Grotesque Variable", "Bricolage Grotesque", ui-sans-serif,
+    system-ui, "Segoe UI", Arial, sans-serif;
+  --font-sans: "Instrument Sans Variable", "Instrument Sans", ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, SFMono-Regular,
+    Menlo, Consolas, monospace;
+  --font-accent: "Instrument Serif", ui-serif, Georgia, "Times New Roman", serif;
+
+  /* Layout */
+  --container-page: 88rem;
+  --spacing-section: clamp(4rem, 9vw, 8rem);
+
+  /* Type scale (size, line-height, tracking and weight travel together) */
+  --text-display: clamp(3.25rem, 17vw, 7.5rem); /* raised to the desktop scale from lg, below */
+  --text-display--line-height: 0.9;
+  --text-display--letter-spacing: -0.025em;
+  --text-display--font-weight: 800;
+
+  /* Home hero headline: four staggered lines, sized so the widest fits the 8-column area */
+  --text-hero: clamp(2.5rem, 11.5vw, 4rem);
+  --text-hero--line-height: 0.95;
+  --text-hero--letter-spacing: -0.02em;
+  --text-hero--font-weight: 800;
+
+  --text-h1: clamp(2.5rem, 6vw, 5rem);
+  --text-h1--line-height: 0.98;
+  --text-h1--letter-spacing: -0.03em;
+  --text-h1--font-weight: 800;
+
+  --text-h2: clamp(1.875rem, 3.8vw, 3rem);
+  --text-h2--line-height: 1.05;
+  --text-h2--letter-spacing: -0.025em;
+  --text-h2--font-weight: 700;
+
+  --text-h3: clamp(1.25rem, 2vw, 1.5rem);
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.01em;
+  --text-h3--font-weight: 700;
+
+  --text-lead: clamp(1.0625rem, 1.4vw, 1.25rem);
+  --text-lead--line-height: 1.55;
+}
+
+/* Desktop display size: the name shares the row with the photo column. */
+@media (min-width: 64rem) {
+  :root {
+    --text-display: clamp(6rem, 11.5vw, 10.5rem);
+    --text-hero: clamp(4rem, 7vw, 6.75rem);
+  }
+}
